@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Case</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+<style>
+.image-container {
+  width: 800px;
+  display: flex;
+  justify-content: center;
+  margin: 150px;
+  padding: 50px;
+}
+</style>
+</head>
+
+<body onload="hideunhidiv()">
+
+
+    <div class="container">
+        
+        	<p></p>
+			<h1>DOS Project: Temperature and Sound Sensor Demo</h1>
+			<h3></h3>
+		
+		
+		
+        <div class="btn-group btn-group-justified" id ="bigbutton">
+            <a href="#" class="btn btn-primary" onclick="myFunctionInput()">Request Data</a>
+            <a href="#" class="btn btn-primary" onclick="myFunctionCloud()">Fetch-Cloud</a>
+        </div>
+        
+		<h4 id ="status">Status:</h4>
+
+        <div class="container" id ="summary">
+            <h2>Device Summary Table</h2>
+            <p>Requested from Edge Server</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SensorType</th>
+                        <th>Data</th>
+                        <th>EdgeServer</th>
+                        <th>Device Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="SensorType1"></td>
+                        <td id="Data1"></td>
+                        <td id="Edge1"></td>
+                        <td id="device1"></td>
+                        <td id="devicestatus"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel-group" id="accordion">
+        </div>
+
+        <div class="col-xs-2" id="inputnode">
+            <label for="ex1">Device</label>
+            <input class="form-control" id="ex1" type="text">
+        </div>
+
+        <div class="col-xs-3" id="inputoperation">
+            <label for="ex2">Operation</label>
+            <input class="form-control" id="ex2" type="text">
+        </div>
+    </div>
+
+
+
+    <script>
+        function hideunhidiv() {
+            
+            
+            $("#summary").hide();
+            $("#inputnode").hide();
+            $("#inputoperation").hide();
+            document.getElementById("status").innerHTML = "Status: Ready";
+            myFunctionCloud();
+        }
+        
+
+        
+        function myFunctionCloud() {
+			
+            var xhr = new XMLHttpRequest();
+            <!--  var url = "//127.0.0.1:9000" !--> 
+            var url = "//192.168.0.103:9000" 
+            var params = "operation=getalldevices";
+            xhr.open('GET', url + "?" + params, true);
+            document.getElementById("status").innerHTML = "Status: Loading Cloud ... ";
+            xhr.send();
+
+            xhr.onreadystatechange = processRequest;
+
+
+
+            function processRequest(e) {
+
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+
+                    $("#cloudList").empty();
+                    $("#accordion").empty();
+                    var index = 0;
+                    for (devices in response) {
+                        var biglist = "";
+
+                        for (device in response[devices]) {
+                            var innerlist = "";
+                            index += 1;
+                            for (data in response[devices][device]) {
+                                if (data == "deviceId") {
+                                    var deviceId = response[devices][device][data];
+                                    innerlist += " [ Device-ID: ";
+                                    innerlist += deviceId+"] ";
+                                }
+                                if (data == "deviceIP") {
+                                    var deviceIP = response[devices][device][data];
+                                    innerlist += " [ Device-IP: ";
+                                    innerlist += deviceIP+"] ";
+
+                                }
+                                if (data == "edgeServerId") {
+                                    var edgeServerId = response[devices][device][data];
+                                    innerlist += " [ EdgeServer-ID: ";
+                                    innerlist += edgeServerId+"] ";
+                                }
+                                if (data == "edgeServerIP") {
+                                    var edgeServerIP = response[devices][device][data];
+                                    innerlist += " [ EdgeServer-IP: ";
+                                    innerlist += edgeServerIP+"] ";
+                                }
+                                if (data == "sensor") {
+                                    var sensor = response[devices][device][data];
+                                    innerlist += " [ Sensor-Type: ";
+                                    innerlist += sensor+"] ";
+                                }
+								
+								if(data == "status") {
+									var status = response[devices][device][data];
+									innerlist += " [ Status: ";
+                                    innerlist += status+"] ";
+									}
+								
+                                if (data == "operations") {
+                                    innerlist += " [ Operation: ";
+                                    for (opers in response[devices][device][data]) {
+                                        var nestedOper = "";
+                                        for (oper in response[devices][device][data][opers]) {
+
+                                            var opern = response[devices][device][data][opers][oper]
+                                            nestedOper += " " + opern + ", ";
+                                        }
+                                        
+                                        innerlist += nestedOper
+                                    }
+									
+									innerlist = innerlist.substring(0, innerlist.length - 2);	
+									innerlist +="] ";
+                                }
+                            }
+
+                            biglist += innerlist;
+                            var msg = '<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse' + index + '">Device: ' + index + '</a></h4></div><div id="collapse' + index + '" class="panel-collapse collapse"><div class="panel-body">' + biglist + '</div></div></div>'
+
+                            $("#accordion").append(msg);
+                            biglist = "";
+
+                        }
+                    }
+
+                document.getElementById("status").innerHTML = "Status: Cloud Loaded Successfully";
+                }
+            }
+
+            $("#inputnode").show();
+            $("#inputoperation").show();
+        }
+
+
+
+        function myFunctionInput() {
+
+            $("#summary").show();
+            
+            var in_node = document.getElementById('ex1').value -1;
+            var in_operation = document.getElementById('ex2').value;
+           
+            var deviceId = "";
+            var deviceIP = "";
+            var edgeServerId = "";
+            var edgeServerIP = "";
+            var sensor = "";
+            var operation = "";
+
+
+            var xhr = new XMLHttpRequest();
+            <!-- var url = "//127.0.0.1:9000" !-->
+            var url = "//192.168.0.103:9000" 
+			document.getElementById("status").innerHTML = "Status: Loading Cloud ...";
+            var params = "operation=getalldevices";
+            xhr.open('GET', url + "?" + params, true);
+            xhr.send();
+
+            xhr.onreadystatechange = processRequest;
+
+            function processRequest(e) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+
+					document.getElementById("status").innerHTML = "Status: Response Received from Cloud";
+                    var response = JSON.parse(xhr.responseText);
+                    var flag =0 ;
+                    for (devices in response) {
+                        for (data in response[devices][in_node]) {
+                            if (data == "deviceId") {
+                                deviceId = response[devices][in_node][data];
+                                
+                            }
+                            if (data == "deviceIP") {
+                                deviceIP = response[devices][in_node][data];
+                                
+                            }
+                            if (data == "edgeServerId") {
+                                edgeServerId = response[devices][in_node][data];
+                                
+                            }
+                            if (data == "edgeServerIP") {
+                                edgeServerIP = response[devices][in_node][data];
+                                
+                            }
+                            if (data == "sensor") {
+                                sensor = response[devices][in_node][data];
+                                
+                            }
+                            if (data == "operations") {
+                                for (opers in response[devices][in_node][data]) {
+                                    for (oper in response[devices][in_node][data][opers]) {
+										
+                                        var opern = response[devices][in_node][data][opers][oper];
+                                        if (opern == in_operation) {
+                                            operation = opern;
+											flag=1;	
+										}
+										
+                                    }
+                                }
+                            }	
+                        }
+                    }
+					if(flag ==0) {
+						document.getElementById("status").innerHTML = "Status: Invalid Node/Operation Selected";
+						}
+					else {
+						document.getElementById("status").innerHTML = "Status: Cloud Loaded Succesfully";
+						}	
+                }
+            
+				
+		
+				if( deviceId != "" && deviceIP != "" && edgeServerId != "" && edgeServerIP != "" && sensor != "" && operation != "")
+				{
+					var xhr_req = new XMLHttpRequest();
+					var url = "//"+edgeServerIP;
+					var params = "operation="+operation+"&sensor="+sensor+"&device="+deviceId+"&";
+					document.getElementById("status").innerHTML = "Status: Sending Request to Edge Server ...";
+					xhr_req.open('GET', url + "?" + params, true);
+					xhr_req.send();
+					xhr_req.onreadystatechange = processRequest;
+					
+					function processRequest(e) {
+						if (xhr_req.readyState == 4 && xhr.status == 200) {
+							var response = JSON.parse(xhr_req.responseText);
+							var error = response.error;
+						if (error == 0) {
+						
+							document.getElementById("SensorType1").innerHTML = response.SensorType;
+							document.getElementById("Data1").innerHTML = response.data;
+							document.getElementById("Edge1").innerHTML = response.EdgeServer;
+							document.getElementById("device1").innerHTML = response.Device;
+							document.getElementById("devicestatus").innerHTML = response.status;
+							document.getElementById("status").innerHTML = "Status: Response Received";
+							} 
+						else if (error == 1) {
+							document.getElementById("status").innerHTML = "Status: Error->Call to Edge Server failed";
+							}
+						}
+					}
+				}
+            
+            }
+
+        }
+
+
+    </script>
+</body>
+
+</html>
+
