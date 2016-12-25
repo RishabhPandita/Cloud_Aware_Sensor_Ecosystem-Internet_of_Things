@@ -1,0 +1,83 @@
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="DDL">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="operations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="read">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="sensorStructure">
+											<xs:annotation>
+												<xs:documentation>Xinu highLevel I/O interfaces defined by
+													user</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="deviceStructure" />
+										<xs:element type="xs:string" name="deviceReg" />
+										<xs:element type="xs:string" name="semaphoreStructure" />
+										<xs:element type="xs:string" name="semaphoreTable" />
+										<xs:element type="xs:string" name="gpio_sensor_csreg" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="regAndPin">
+								<xs:annotation>
+									<xs:documentation>Write to LED</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="clear">
+											<xs:annotation>
+												<xs:documentation>BBB GPIO PINS REG</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="clearReg" />
+										<xs:element type="xs:string" name="clearPin" />
+										<xs:element type="xs:string" name="set" />
+										<xs:element type="xs:string" name="setReg" />
+										<xs:element type="xs:string" name="setPin" />
+										<xs:element type="xs:string" name="riseDetectReg" />
+										<xs:element type="xs:string" name="irqStatus" />
+										<xs:element type="xs:string" name="irqStatusSet" />
+										<xs:element type="xs:string" name="irqEnableBit" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="sensor">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="REG_HW">
+											<xs:annotation>
+												<xs:documentation>macros for header file</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="GPIO_BASE_ADDR" />
+										<xs:element type="xs:byte" name="GPIO_SET" />
+										<xs:element type="xs:byte" name="GPIO_CLEAR" />
+										<xs:element type="xs:byte" name="GPIO_WRITE" />
+										<xs:element type="xs:string" name="INTERRUPT_CONTROLLER" />
+										<xs:element type="xs:byte" name="INTR_BIT" />
+										<xs:element type="xs:string" name="clearInterruptStatus" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="functionName">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="gpioSetInterrupt" />
+										<xs:element type="xs:string" name="clearInterrupt" />
+										<xs:element type="xs:string" name="riseEdgeSetInterrupt" />
+										<xs:element type="xs:string" name="gpioRead" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
