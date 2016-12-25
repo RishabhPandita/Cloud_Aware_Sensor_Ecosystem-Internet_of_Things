@@ -1,0 +1,27 @@
+{
+	"devices": [{
+		"deviceId": "TMP-36",
+		"deviceIP": "192.168.0.102:600",
+		"edgeServerId": "EDGE-01",
+		"edgeServerIP": "192.168.0.103:7000",
+		"sensor": "temperature",
+		"status": "DEAD",
+		"operations": [{
+			"name": "read"
+		}]
+	}, {
+		"deviceId": "PHANTOM-S1",
+		"deviceIP": "192.168.0.109:600",
+		"edgeServerId": "EDGE-01",
+		"edgeServerIP": "192.168.0.103:7000",
+		"sensor": "sound",
+		"status": "DEAD",
+		"operations": [{
+			"name": "read"
+		}, {
+			"name": "tftmodeon"
+		}, {
+			"name": "tftmodeoff"
+		}]
+	}]
+}
