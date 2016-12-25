@@ -1,0 +1,135 @@
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="DDL">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="operations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="read">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="sensorStructure">
+											<xs:annotation>
+												<xs:documentation>Xinu highLevel I/O interfaces defined by
+													user</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="deviceStructure" />
+										<xs:element type="xs:string" name="deviceReg" />
+										<xs:element type="xs:string" name="semaphoreStructure" />
+										<xs:element type="xs:string" name="deviceTable" />
+										<xs:element type="xs:string" name="semaphoreTable" />
+										<xs:element type="xs:string" name="sensor_csreg" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="regAndPin">
+								<xs:annotation>
+									<xs:documentation>Write to LED</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="adc_cntrl">
+											<xs:annotation>
+												<xs:documentation>BBB ADC PINS REG</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="irqStatus" />
+										<xs:element type="xs:string" name="irqEnable" />
+										<xs:element type="xs:string" name="step" />
+										<xs:element type="xs:string" name="stepConfig" />
+										<xs:element type="xs:string" name="stepEnable" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="sensor">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="ADC_BASE_ADDR">
+											<xs:annotation>
+												<xs:documentation>macros for header file</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element type="xs:string" name="INTERRUPT_CONTROLLER_BASE_ADDR" />
+										<xs:element type="xs:string" name="ADC_ENABLE_BIT" />
+										<xs:element type="xs:int" name="CLOCK_FREQ_MOD" />
+										<xs:element type="xs:int" name="CLOCK_FREQ" />
+										<xs:element type="xs:byte" name="ADC_GP_MODE" />
+										<xs:element type="xs:string" name="INTR_BIT" />
+										<xs:element type="xs:string" name="WRITE_PROTECT_BIT" />
+										<xs:element type="xs:string" name="ADC_OP_MODE_CLEAR" />
+										<xs:element type="xs:byte" name="ADC_OP_MODE_SHIFT" />
+										<xs:element type="xs:string" name="STEP_AVG" />
+										<xs:element type="xs:byte" name="ADC_FIFO_0" />
+										<xs:element type="xs:string" name="ADC_FIFO_SELECTION_CLEAR" />
+										<xs:element type="xs:byte" name="ADC_FIFO_SELECTION_SHIFT" />
+										<xs:element type="xs:string" name="ADC_SC_DIFF_CTRL" />
+										<xs:element type="xs:string" name="SEL_RFM_SWC_CLEAR" />
+										<xs:element type="xs:byte" name="SEL_RFM_SWC_SHIFT" />
+										<xs:element type="xs:string" name="SEL_INP_SWC_CLEAR" />
+										<xs:element type="xs:byte" name="SEL_INP_SWC_SHIFT" />
+										<xs:element type="xs:string" name="SEL_INM_SWC_CLEAR" />
+										<xs:element type="xs:byte" name="SEL_INM_SWC_SHIFT" />
+										<xs:element type="xs:string" name="SEL_RFP_SWC_CLEAR" />
+										<xs:element type="xs:byte" name="SEL_RFP_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_WPNSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_WPNSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XNNSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XNNSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XNPSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XNPSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XPPSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_XPPSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YNNSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YNNSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YPNSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YPNSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YPPSW_SWC_CLEAR" />
+										<xs:element type="xs:string" name="ADC_STEPCONFIG_YPPSW_SWC_SHIFT" />
+										<xs:element type="xs:string" name="ADC_MODE_CLEAR" />
+										<xs:element type="xs:string" name="ADC_MODE_SHIFT" />
+										<xs:element type="xs:string" name="CM_PER" />
+										<xs:element type="xs:string" name="CM_PER_L3S_CLKSTCTRL" />
+										<xs:element type="xs:string" name="CM_PER_L3_CLKSTCTRL" />
+										<xs:element type="xs:string" name="CM_PER_L3_INSTR_CLKCTRL" />
+										<xs:element type="xs:string" name="CM_PER_L3_CLKCTRL" />
+										<xs:element type="xs:string" name="CM_PER_OCPWP_L3_CLKSTCTRL" />
+										<xs:element type="xs:string" name="CM_WKUP" />
+										<xs:element type="xs:string" name="CM_WKUP_CLKSTCTRL" />
+										<xs:element type="xs:string" name="CM_WKUP_CONTROL_CLKCTRL" />
+										<xs:element type="xs:string" name="CM_WKUP_L4WKUP_CLKCTRL" />
+										<xs:element type="xs:string" name="CM_L3_AON_CLKSTCTRL" />
+										<xs:element type="xs:string" name="CM_WKUP_ADC_TSC_CLKCTRL" />
+										<xs:element type="xs:string" name="CM_WKUP_CM_L4_WKUP_AON_CLKSTCTRL" />
+										<xs:element type="xs:byte" name="ADC_CHANNEL_1" />
+										<xs:element type="xs:byte" name="ADC_NEGATIVE_REF" />
+										<xs:element type="xs:byte" name="ADC_POSITIVE_REF" />
+										<xs:element type="xs:string" name="ADC_STEP_CONT" />
+										<xs:element type="xs:byte" name="ADC_SE_OP_MODE" />
+										<xs:element type="xs:string" name="HWREG" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="functionName">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="adcDisableWriteProtect" />
+										<xs:element type="xs:string" name="adcConfigOperationMode" />
+										<xs:element type="xs:string" name="adcClearInterruptStatus" />
+										<xs:element type="xs:string" name="adcSetInterruptBit" />
+										<xs:element type="xs:string" name="adcEnable" />
+										<xs:element type="xs:string" name="adcStepOpMode" />
+										<xs:element type="xs:string" name="adcStepAverage" />
+										<xs:element type="xs:string" name="adcStepEnable" />
+										<xs:element type="xs:string" name="adcStepDisable" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

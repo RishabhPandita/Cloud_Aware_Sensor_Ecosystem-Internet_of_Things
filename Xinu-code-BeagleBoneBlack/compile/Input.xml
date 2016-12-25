@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DDL>
+	<operations>
+		<read>
+			<!-- Xinu highLevel I/O interfaces defined by user -->
+			<sensorStructure>gpio_sensor_csreg</sensorStructure>
+			<deviceStructure>dentry</deviceStructure>
+			<deviceReg>dvcsr</deviceReg>
+			<semaphoreStructure>sentry</semaphoreStructure>
+			<semaphoreTable>semtab</semaphoreTable>
+			<gpio_sensor_csreg>reg</gpio_sensor_csreg>
+		</read>
+		<!-- Write to LED -->
+		<regAndPin>
+			<!-- BBB GPIO PINS REG -->
+			<clear>GPIO_CLEAR</clear>
+			<clearReg>clear_data_out</clearReg>
+			<clearPin>GPIO_WRITE</clearPin>
+			<set>GPIO_SET</set>
+			<setReg>data_out</setReg>
+			<setPin>GPIO_WRITE</setPin>
+			<riseDetectReg>rising_detect</riseDetectReg>
+			<irqStatus>irq_status_0</irqStatus>
+			<irqStatusSet>irq_status_set_0</irqStatusSet>
+			<irqEnableBit>irq_enable_bit</irqEnableBit>
+		</regAndPin>
+		<sensor>
+			<!-- macros for header file -->
+			<REG_HW>(*((volatile uint32 *)(n)))</REG_HW>
+			<GPIO_BASE_ADDR>0x481AC000</GPIO_BASE_ADDR>
+			<GPIO_SET>1</GPIO_SET>
+			<GPIO_CLEAR>0</GPIO_CLEAR>
+			<GPIO_WRITE>2</GPIO_WRITE>
+			<INTERRUPT_CONTROLLER>0x48200000</INTERRUPT_CONTROLLER>
+			<INTR_BIT>2</INTR_BIT>
+			<clearInterruptStatus>0xFFFF</clearInterruptStatus>
+		</sensor>
+		<functionName>
+		<!-- BBB Specific functions that are platofrm dependent -->
+			<gpioSetInterrupt>gpio_set_interrupt_bit</gpioSetInterrupt>
+			<clearInterrupt>gpio_clear_interrupt_status</clearInterrupt>
+			<riseEdgeSetInterrupt>gpio_set_rising_edge_detect</riseEdgeSetInterrupt>
+			<gpioRead>gpioread</gpioRead>
+		</functionName>
+	</operations>
+</DDL>
